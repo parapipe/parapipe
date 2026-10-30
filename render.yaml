@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: nail-queue-demo
+    runtime: python
+    plan: free
+
+    autoDeployTrigger: "off"
+
+    buildCommand: python3 -m py_compile app.py
+    startCommand: HOST=0.0.0.0 python3 app.py
+    healthCheckPath: /healthz
+
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+
+      - key: ADMIN_PASSWORD
+        generateValue: true
+
+      - key: NAIL_EARLY_DATE
+        value: "2026-10-30"
+
+      - key: QUEUE_DEMO_MODE
+        value: "1"
+
+      - key: QUEUE_DB
+        value: /tmp/nail-queue.sqlite3
